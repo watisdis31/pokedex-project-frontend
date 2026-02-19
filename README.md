@@ -1,7 +1,6 @@
 # 📘 Pokedex Project Frontend Documentation
 
 Website live URL: **https://pokedex-project-frontend.vercel.app**  
-GitHub repo: **https://github.com/watisdis31/pokedex-project-frontend**
 
 ---
 
