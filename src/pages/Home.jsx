@@ -5,7 +5,7 @@ import PokemonCard from "../components/PokemonCard";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import instance from "../api/axios";
-import axios from "axios";
+
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -33,8 +33,8 @@ export default function Home() {
   useEffect(() => {
     const fetchBookmarks = async () => {
       try {
-        const { data } = await axios.get("/bookmarks");
-        setBookmarks(data.map((b) => b.pokemonId)); // store just ids
+        const { data } = await instance.get("/bookmarks");
+        setBookmarks(data.map((b) => b.pokemonId));
       } catch (err) {
         console.error(err);
       }

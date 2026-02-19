@@ -3,8 +3,9 @@ import { useNavigate, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { registerUser, setLogin } from "../features/authSlice";
 import { GoogleLogin } from "@react-oauth/google";
-import axios from "../api/axios";
+
 import Swal from "sweetalert2";
+import instance from "../api/axios";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ export default function Register() {
 
   const handleGoogle = async (credentialResponse) => {
     try {
-      const { data } = await axios.post("/auth/google-login", {
+      const { data } = await instance.post("/auth/google-login", {
         googleToken: credentialResponse.credential,
       });
 
