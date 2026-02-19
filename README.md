@@ -1,16 +1,95 @@
-# React + Vite
+# 📘 Pokedex Project Frontend Documentation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Website live URL: **https://pokedex-project-frontend.vercel.app**  
+GitHub repo: **https://github.com/watisdis31/pokedex-project-frontend**
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧱 Overview
 
-## React Compiler
+This is a **React + Vite** frontend application that acts as a Pokédex interface — displaying Pokémon data fetched from the **PokéAPI (https://pokeapi.co)**. Users can view Pokémon lists, search by name, and see details like sprites and stats in an interactive UI.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The project uses **Vite** as the build tool and React for component UI. It’s purely a frontend; all data comes from external APIs.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+
+- React (UI library)  
+- Vite (build tool & dev server)  
+- JavaScript / JSX  
+- CSS or Tailwind  
+- Data fetched from **PokéAPI** (public REST API)
+
+---
+
+## 🚀 Features
+
+✔ Browse a list of Pokémon  
+✔ Search Pokémon by name  
+✔ View Pokémon details (image, ID, stats, types)  
+✔ Responsive UI for web browsers  
+✔ Fast loading with Vite setup
+
+---
+
+
+- `src/components/` – Reusable UI components  
+- `src/pages/` – Page views (Home, Detail)  
+- `src/services/` – API fetch utilities  
+- `App.jsx` – Root React component  
+- `main.jsx` – App bootstrap with Vite  
+
+---
+
+## 🌐 API Integration
+
+This frontend fetches data from the **PokéAPI** — a free public REST Pokémon database.
+
+### Example Fetch Endpoints
+
+| Purpose | HTTP Method | External API Endpoint |
+|---------|-------------|---------------------|
+| Get list of Pokémon | GET | `https://pokeapi.co/api/v2/pokemon?limit=...` |
+| Get details for one Pokémon | GET | `https://pokeapi.co/api/v2/pokemon/{id or name}` |
+| Get Pokémon species | GET | `https://pokeapi.co/api/v2/pokemon-species/{id}` |
+| Get type info | GET | `https://pokeapi.co/api/v2/type/{typeName}` |
+
+### How Data is Used
+
+- **Pokémon List:** Loads a batch of Pokémon with their name & sprite  
+- **Detail Page:** Fetches full stats (types, abilities, base stats) when a card is clicked  
+- **Search:** Filters Pokémon by user input  
+- **Pagination / Infinite Scroll:** Loads more Pokémon when scrolling or via next/prev buttons  
+
+### Example Data Format
+
+#### Pokémon List JSON
+```json
+{
+  "count": 1281,
+  "results": [
+    { "name": "bulbasaur", "url": "https://pokeapi.co/api/v2/pokemon/1/" },
+    ...
+  ]
+}
+```
+
+#### Pokémon Detail JSON
+```json
+{
+  "id": 1,
+  "name": "bulbasaur",
+  "sprites": {
+    "front_default": "https://..."
+  },
+  "types": [
+    { "type": { "name": "grass" } },
+    { "type": { "name": "poison" } }
+  ],
+  "stats": [
+    { "base_stat": 45, "stat": { "name": "hp" } },
+    ...
+  ]
+}
+```
