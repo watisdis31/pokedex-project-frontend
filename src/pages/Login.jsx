@@ -86,6 +86,7 @@ export default function Login() {
       if (!event.data?.githubCode) return;
 
       const code = event.data.githubCode;
+      console.log("GitHub code received:", code);
 
       try {
         const { data } = await instance.post("/auth/github-login", { code });
