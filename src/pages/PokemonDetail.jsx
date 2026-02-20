@@ -202,7 +202,7 @@ export default function PokemonDetail() {
         <section className="grid grid-cols-1 md:grid-cols-2 gap-24">
           <div className="space-y-8">
             <h2 className="text-3xl font-medium tracking-wide">
-              Competitive Build
+              Competitive Build, Recommended by Gemini AI
             </h2>
 
             <div className="space-y-4 text-gray-400">
