@@ -11,6 +11,8 @@ export default function Login() {
   const navigate = useNavigate();
   const { isLogin, loading } = useSelector((state) => state.auth);
 
+  const GITHUB_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID;
+
   useEffect(() => {
     if (isLogin) navigate("/");
   }, [isLogin, navigate]);
@@ -67,6 +69,52 @@ export default function Login() {
     }
   };
 
+  const handleGitHub = () => {
+    const githubUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user:email`;
+    const width = 600;
+    const height = 700;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+
+    const popup = window.open(
+      githubUrl,
+      "GitHub Login",
+      `width=${width},height=${height},top=${top},left=${left}`,
+    );
+
+    const receiveMessage = async (event) => {
+      if (!event.data?.githubCode) return;
+
+      const code = event.data.githubCode;
+
+      try {
+        const { data } = await instance.post("/auth/github-login", { code });
+        localStorage.setItem("access_token", data.access_token);
+        dispatch(setLogin());
+
+        Swal.fire({
+          icon: "success",
+          title: "GitHub Login Success",
+          showConfirmButton: false,
+          timer: 1200,
+        });
+
+        navigate("/");
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "GitHub Login Failed",
+          text: error.response?.data?.message,
+        });
+      } finally {
+        window.removeEventListener("message", receiveMessage);
+        popup.close();
+      }
+    };
+
+    window.addEventListener("message", receiveMessage);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a]">
       <div className="bg-[#1a1a1a] p-8 rounded-2xl border border-gray-800 shadow-[0_0_25px_rgba(0,0,0,0.8)] w-96">
@@ -96,11 +144,14 @@ export default function Login() {
           </button>
         </form>
 
-        <div className="mt-5 flex justify-center">
-          <GoogleLogin
-            onSuccess={handleGoogle}
-            useOneTap
-          />
+        <div className="mt-5 flex flex-col gap-2 justify-center items-center">
+          <GoogleLogin onSuccess={handleGoogle} useOneTap />
+          <button
+            onClick={handleGitHub}
+            className="bg-gray-800 text-white py-2 px-4 rounded hover:scale-105 transition cursor-pointer"
+          >
+            Login with GitHub
+          </button>
         </div>
 
         <p className="text-center text-sm mt-6 text-gray-400">
