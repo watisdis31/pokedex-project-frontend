@@ -2,6 +2,7 @@
 
 Website live URL: **https://pokedex-project-frontend.vercel.app**  
 
+Backend repo: **https://github.com/watisdis31/pokedex-project-h8**
 ---
 
 ## 🧱 Overview
